@@ -1,4 +1,4 @@
-package ca.spottedleaf.concurrentutil.util;
+package ca.spottedleaf.common.util;
 
 import java.util.Collection;
 
@@ -23,6 +23,16 @@ public final class CollectionUtil {
         }
 
         return builder.append("}}");
+    }
+
+    public static boolean intersects(final Collection<?> c1, final Collection<?> c2) {
+        for (final Object value : c2) {
+            if (c1.contains(value)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private CollectionUtil() {

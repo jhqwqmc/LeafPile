@@ -1,4 +1,4 @@
-package ca.spottedleaf.concurrentutil.util;
+package ca.spottedleaf.common.util;
 
 public final class IntPairUtil {
 

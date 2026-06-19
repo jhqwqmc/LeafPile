@@ -1,6 +1,6 @@
 package ca.spottedleaf.concurrentutil.scheduler;
 
-import ca.spottedleaf.concurrentutil.util.TimeUtil;
+import ca.spottedleaf.common.util.TimeUtil;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.BooleanSupplier;
 

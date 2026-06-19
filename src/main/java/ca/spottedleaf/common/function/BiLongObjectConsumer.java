@@ -1,4 +1,4 @@
-package ca.spottedleaf.concurrentutil.function;
+package ca.spottedleaf.common.function;
 
 @FunctionalInterface
 public interface BiLongObjectConsumer<V> {

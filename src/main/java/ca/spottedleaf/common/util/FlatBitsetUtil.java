@@ -1,4 +1,4 @@
-package ca.spottedleaf.concurrentutil.util;
+package ca.spottedleaf.common.util;
 
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import java.util.BitSet;

@@ -3,7 +3,7 @@ package ca.spottedleaf.concurrentutil.executor.queue;
 import ca.spottedleaf.concurrentutil.executor.PrioritisedExecutor;
 import ca.spottedleaf.concurrentutil.lock.ReentrantAreaLock;
 import ca.spottedleaf.concurrentutil.map.concurrent.longs.ConcurrentChainedLong2ReferenceHashTable;
-import ca.spottedleaf.concurrentutil.util.IntPairUtil;
+import ca.spottedleaf.common.util.IntPairUtil;
 import ca.spottedleaf.concurrentutil.util.Priority;
 import java.util.ArrayList;
 import java.util.List;

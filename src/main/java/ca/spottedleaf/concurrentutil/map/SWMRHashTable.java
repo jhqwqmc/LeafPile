@@ -1,9 +1,9 @@
 package ca.spottedleaf.concurrentutil.map;
 
-import ca.spottedleaf.concurrentutil.util.CollectionUtil;
+import ca.spottedleaf.common.util.CollectionUtil;
 import ca.spottedleaf.concurrentutil.util.ConcurrentUtil;
-import ca.spottedleaf.concurrentutil.util.HashUtil;
-import ca.spottedleaf.concurrentutil.util.IntegerUtil;
+import ca.spottedleaf.common.util.HashUtil;
+import ca.spottedleaf.common.util.IntegerUtil;
 import java.lang.invoke.VarHandle;
 import java.util.*;
 import java.util.function.BiConsumer;

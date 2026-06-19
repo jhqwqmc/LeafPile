@@ -1,7 +1,7 @@
 package ca.spottedleaf.concurrentutil.collection;
 
 import ca.spottedleaf.concurrentutil.util.ConcurrentUtil;
-import ca.spottedleaf.concurrentutil.util.ThrowUtil;
+import ca.spottedleaf.common.util.ThrowUtil;
 import java.lang.invoke.VarHandle;
 import java.util.*;
 import java.util.function.Consumer;
@@ -127,7 +127,7 @@ public class MultiThreadedQueue<E> implements Queue<E> {
      * {@inheritDoc}
      */
     @Override
-    public E remove() throws NoSuchElementException {
+    public final E remove() throws NoSuchElementException {
         final E ret = this.poll();
 
         if (ret == null) {
@@ -145,7 +145,7 @@ public class MultiThreadedQueue<E> implements Queue<E> {
      * </p>
      */
     @Override
-    public boolean add(final E element) {
+    public final boolean add(final E element) {
         return this.offer(element);
     }
 
@@ -156,7 +156,7 @@ public class MultiThreadedQueue<E> implements Queue<E> {
      * @param element The specified element.
      * @return {@code true} if this queue previously allowed additions
      */
-    public boolean forceAdd(final E element) {
+    public final boolean forceAdd(final E element) {
         final LinkedNode<E> node = new LinkedNode<>(element, null);
 
         return !this.forceAppendList(node, node);
@@ -166,7 +166,7 @@ public class MultiThreadedQueue<E> implements Queue<E> {
      * {@inheritDoc}
      */
     @Override
-    public E element() throws NoSuchElementException {
+    public final E element() throws NoSuchElementException {
         final E ret = this.peek();
 
         if (ret == null) {
@@ -183,7 +183,7 @@ public class MultiThreadedQueue<E> implements Queue<E> {
      * </p>
      */
     @Override
-    public boolean offer(final E element) {
+    public final boolean offer(final E element) {
         Objects.requireNonNull(element, "Null element");
 
         final LinkedNode<E> node = new LinkedNode<>(element, null);
@@ -195,7 +195,7 @@ public class MultiThreadedQueue<E> implements Queue<E> {
      * {@inheritDoc}
      */
     @Override
-    public E peek() {
+    public final E peek() {
         for (LinkedNode<E> head = this.getHeadOpaque(), curr = head;;) {
             final LinkedNode<E> next = curr.getNextVolatile();
             final E element = curr.getElementPlain(); /* Likely in sync */
@@ -218,7 +218,7 @@ public class MultiThreadedQueue<E> implements Queue<E> {
      * {@inheritDoc}
      */
     @Override
-    public E poll() {
+    public final E poll() {
         return this.removeHead();
     }
 
@@ -231,7 +231,7 @@ public class MultiThreadedQueue<E> implements Queue<E> {
      * @param predicate The specified predicate.
      * @return The head if it matches the predicate, or {@code null} if it did not or this queue is empty.
      */
-    public E pollIf(final Predicate<E> predicate) {
+    public final E pollIf(final Predicate<E> predicate) {
         return this.removeHead(Objects.requireNonNull(predicate, "Null predicate"));
     }
 
@@ -251,7 +251,7 @@ public class MultiThreadedQueue<E> implements Queue<E> {
      * </p>
      * @return {@code true} if the queue was modified to prevent additions, {@code false} if it already prevented additions.
      */
-    public boolean preventAdds() {
+    public final boolean preventAdds() {
         final LinkedNode<E> deadEnd = new LinkedNode<>(null, null);
         deadEnd.setNextPlain(deadEnd);
 
@@ -271,7 +271,7 @@ public class MultiThreadedQueue<E> implements Queue<E> {
      * This function is not MT-Safe.
      * </p>
      */
-    public void allowAdds() {
+    public final void allowAdds() {
         LinkedNode<E> tail = this.getTailPlain();
 
         /* We need to find the tail given the cas on tail isn't atomic (nor volatile) in this.appendList */
@@ -289,7 +289,7 @@ public class MultiThreadedQueue<E> implements Queue<E> {
      * </p>
      * @return {@code true} if the queue was previously add-locked, {@code false} otherwise.
      */
-    public boolean tryAllowAdds() {
+    public final boolean tryAllowAdds() {
         LinkedNode<E> tail = this.getTailPlain();
 
         for (int failures = 0;;) {
@@ -325,7 +325,7 @@ public class MultiThreadedQueue<E> implements Queue<E> {
      * @param element The specified element.
      * @return {@code true} if the queue now allows additions, {@code false} if the element was added.
      */
-    public boolean addOrAllowAdds(final E element) {
+    public final boolean addOrAllowAdds(final E element) {
         Objects.requireNonNull(element, "Null element");
         int failures = 0;
 
@@ -388,7 +388,7 @@ public class MultiThreadedQueue<E> implements Queue<E> {
     /**
      * Returns whether this queue is currently add-blocked. That is, whether {@link #add(Object)} and friends will return {@code false}.
      */
-    public boolean isAddBlocked() {
+    public final boolean isAddBlocked() {
         for (LinkedNode<E> tail = this.getTailOpaque();;) {
             LinkedNode<E> next = tail.getNextVolatile();
             if (next == null) {
@@ -413,7 +413,7 @@ public class MultiThreadedQueue<E> implements Queue<E> {
      * @return {@code null} if the queue is now add-blocked or was previously add-blocked, else returns
      * an non-null value which was the previous head of queue.
      */
-    public E pollOrBlockAdds() {
+    public final E pollOrBlockAdds() {
         int failures = 0;
         for (LinkedNode<E> head = this.getHeadOpaque(), curr = head;;) {
             final E currentVal = curr.getElementVolatile();
@@ -810,7 +810,7 @@ public class MultiThreadedQueue<E> implements Queue<E> {
      * </p>
      */
     @Override
-    public int size() {
+    public final int size() {
         int size = 0;
 
         /* Volatile is required to synchronize with the write to the first element */
@@ -835,7 +835,7 @@ public class MultiThreadedQueue<E> implements Queue<E> {
      * {@inheritDoc}
      */
     @Override
-    public boolean isEmpty() {
+    public final boolean isEmpty() {
         return this.peek() == null;
     }
 

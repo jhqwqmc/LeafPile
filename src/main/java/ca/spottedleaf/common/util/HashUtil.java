@@ -1,4 +1,4 @@
-package ca.spottedleaf.concurrentutil.util;
+package ca.spottedleaf.common.util;
 
 public final class HashUtil {
 
@@ -105,7 +105,6 @@ public final class HashUtil {
         x ^= x >>> 16;
         return (x ^ x >>> 32) * INV_LONG_PHI;
     }
-
 
     private HashUtil() {}
 }

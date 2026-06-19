@@ -6,7 +6,7 @@ import ca.spottedleaf.concurrentutil.executor.queue.PrioritisedTaskQueue;
 import ca.spottedleaf.concurrentutil.list.COWArrayList;
 import ca.spottedleaf.concurrentutil.util.LazyRunnable;
 import ca.spottedleaf.concurrentutil.util.Priority;
-import ca.spottedleaf.concurrentutil.util.TimeUtil;
+import ca.spottedleaf.common.util.TimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.time.Duration;

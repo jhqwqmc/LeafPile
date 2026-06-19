@@ -1,4 +1,16 @@
-package ca.spottedleaf.concurrentutil.util;
+package ca.spottedleaf.common.util;
+
+import ca.spottedleaf.common.time.CalenderDuration;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAccessor;
+import java.time.temporal.TemporalQueries;
 
 public final class TimeUtil {
 
@@ -84,6 +96,48 @@ public final class TimeUtil {
             return min;
         }
         return value;
+    }
+
+    public static ZonedDateTime parseEpochMilli(final DateTimeFormatter format, final String dateTime) throws DateTimeParseException {
+        final TemporalAccessor parsed = format.parse(dateTime);
+
+        final LocalDate localDate = parsed.query(TemporalQueries.localDate());
+
+        LocalTime localTime = parsed.query(TemporalQueries.localTime());
+        if (localTime == null) {
+            localTime = LocalTime.of(0, 0);
+        }
+
+        ZoneId zoneId = parsed.query(TemporalQueries.zoneId());
+        if (zoneId == null) {
+            zoneId = ZoneId.systemDefault();
+        }
+
+        return ZonedDateTime.of(localDate, localTime, zoneId);
+    }
+
+    public static String formatEpochMilli(final DateTimeFormatter format, final long timeMS, final ZoneId zoneId) {
+        return format.format(ZonedDateTime.ofInstant(Instant.ofEpochMilli(timeMS), zoneId == null ? ZoneId.systemDefault() : zoneId));
+    }
+
+    public static String formatDateWithRelative(final DateTimeFormatter format, final long timeMS, final ZoneId zoneId) {
+        return formatDateWithRelative(format, timeMS, zoneId, ChronoUnit.MINUTES);
+    }
+
+    public static String formatDateWithRelative(final DateTimeFormatter format, final long timeMS, final ZoneId zoneId,
+                                                final ChronoUnit relativeMaxResolution) {
+        final String dateTime = formatEpochMilli(format, timeMS, zoneId);
+
+        final ZonedDateTime now = ZonedDateTime.now();
+        final ZonedDateTime target = ZonedDateTime.ofInstant(Instant.ofEpochMilli(timeMS), zoneId);
+        final boolean targetInFuture = target.isAfter(now);
+
+        final CalenderDuration difference = CalenderDuration.difference(now, target, relativeMaxResolution, true);
+        if (difference.isZero()) {
+            return dateTime + " (approximately now)";
+        } else {
+            return dateTime + " (" + difference.toPrettyValue(relativeMaxResolution) + " in the " + (targetInFuture ? "future" : "past") + ")";
+        }
     }
 
     private TimeUtil() {}

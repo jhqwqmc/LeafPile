@@ -2,7 +2,7 @@ package ca.spottedleaf.concurrentutil.lock;
 
 import ca.spottedleaf.concurrentutil.collection.MultiThreadedQueue;
 import ca.spottedleaf.concurrentutil.map.concurrent.longs.ConcurrentChainedLong2ReferenceHashTable;
-import ca.spottedleaf.concurrentutil.util.IntPairUtil;
+import ca.spottedleaf.common.util.IntPairUtil;
 import java.util.Objects;
 import java.util.concurrent.locks.LockSupport;
 

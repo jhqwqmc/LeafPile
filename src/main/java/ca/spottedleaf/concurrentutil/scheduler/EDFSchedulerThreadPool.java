@@ -3,7 +3,7 @@ package ca.spottedleaf.concurrentutil.scheduler;
 import ca.spottedleaf.concurrentutil.set.LinkedSortedSet;
 import ca.spottedleaf.concurrentutil.util.ConcurrentUtil;
 import ca.spottedleaf.concurrentutil.util.LazyRunnable;
-import ca.spottedleaf.concurrentutil.util.TimeUtil;
+import ca.spottedleaf.common.util.TimeUtil;
 import java.lang.invoke.VarHandle;
 import java.time.Duration;
 import java.util.ArrayList;

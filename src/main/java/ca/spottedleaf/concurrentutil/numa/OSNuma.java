@@ -1,6 +1,6 @@
 package ca.spottedleaf.concurrentutil.numa;
 
-import ca.spottedleaf.concurrentutil.util.FlatBitsetUtil;
+import ca.spottedleaf.common.util.FlatBitsetUtil;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 
 public interface OSNuma {
